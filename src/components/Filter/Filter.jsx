@@ -1,8 +1,13 @@
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { getContactFilter } from 'redux/selectors';
+import { setContactFilter } from 'redux/filterSlice';
 import { Wrapper, Label, Input } from './Filter.styled';
 import { BiSearchAlt2 } from 'react-icons/bi';
 
-export const Filter = ({ value, onFilterChange }) => {
+export const Filter = () => {
+  const dispatch = useDispatch();
+  const filterValue = useSelector(getContactFilter);
+
   return (
     <Wrapper>
       <Label htmlFor="filter">
@@ -13,14 +18,9 @@ export const Filter = ({ value, onFilterChange }) => {
         name="filter"
         type="text"
         id="filter"
-        value={value}
-        onChange={onFilterChange}
+        value={filterValue}
+        onChange={e => dispatch(setContactFilter(e.currentTarget.value))}
       />
     </Wrapper>
   );
-};
-
-Filter.propTypes = {
-  value: PropTypes.string.isRequired,
-  onFilterChange: PropTypes.func.isRequired,
 };
